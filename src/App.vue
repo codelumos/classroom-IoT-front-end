@@ -14,25 +14,20 @@
                 class="el-menu-vertical"
                 router
               >
-                <el-submenu index="1">
-                  <template slot="title">
-                    <i class="el-icon-connection"></i>
-                    <span>连接管理</span>
-                  </template>
-                </el-submenu>
                 <el-submenu index="2">
                   <template slot="title">
                     <i class="el-icon-printer"></i>
                     <span>设备管理</span>
                   </template>
                   <el-menu-item index="/devInfo">设备信息</el-menu-item>
-                  <el-menu-item index="/devDebug">在线调试</el-menu-item>
+                  <el-menu-item index="/devGroup">设备分组</el-menu-item>
                 </el-submenu>
                 <el-submenu index="3">
                   <template slot="title"
                     ><i class="el-icon-document"></i>
                     <span>数据分析</span>
                   </template>
+                  <el-menu-item index="/analysis">统计分析</el-menu-item>
                 </el-submenu>
                 <el-submenu index="4">
                   <template slot="title">
@@ -66,7 +61,7 @@ export default {
       let app = this;
       app.currentIndex = newIndex;
     },
-  }
+  },
 };
 </script>
 
@@ -101,14 +96,18 @@ body {
   background-color: #f5f5f5;
   color: #333;
   text-align: center;
-  height: 100%;
+  height: 95%;
+  border: 1px solid #bdb6b6;
+  border-right: none;
 }
 
 .el-main {
-  background-color: #fafafa;
+  border-left: none;
   color: #333;
   text-align: center;
-  height: 100%;
+  height: 95%;
+  border: 1px solid #bdb6b6;
+  border-left: none;
 }
 .el-menu-vertical li {
   background-color: #f5f5f5;
