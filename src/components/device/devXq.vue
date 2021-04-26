@@ -110,6 +110,20 @@
       </el-tab-pane>
       <el-tab-pane label="设备日志" name="log">
         <h3 style="text-align:left;margin:10px 0">设备日志</h3>
+        <el-table
+          :data="logData"
+          max-height="500"
+          ref="logTable"
+          height="500"
+          border
+        >
+          <el-table-column label="请求时间" width="200">
+            <template slot-scope="scope">{{
+              getDateString(new Date(scope.row.requestTime))
+            }}</template></el-table-column
+          >
+          <el-table-column prop="status" label="设备状态"></el-table-column>
+        </el-table>
       </el-tab-pane>
       <el-tab-pane label="在线调试" name="debug">
         <h3 style="text-align:left;margin:10px 0">在线调试</h3>
@@ -226,7 +240,7 @@
             <div class="info-table-value" style="text-align:left;">
               <el-slider
                 style="margin:0 10px"
-                v-model="devDebug.brightness"
+                v-model="devDebug.temperature"
                 :step="1"
                 :max="50"
                 :min="-30"
@@ -276,7 +290,6 @@
           </div>
         </div>
         <div style="width:75%;margin-top:20px;">
-          <el-button type="primary" @click="refresh()">恢复初始状态</el-button>
           <el-button type="primary" @click="debug()">调试</el-button>
         </div>
       </el-tab-pane>
@@ -323,6 +336,7 @@ export default {
         temperature: 0,
         pattern: 0,
       },
+      logData: [],
     };
   },
   methods: {
@@ -338,7 +352,6 @@ export default {
         .get("/device/detail", { params: { deviceId: app.id } })
         .then(function(res) {
           app.deviceXq = res.data;
-          console.log(res.data)
           app.devDebug = JSON.parse(res.data.status).state;
           app.devDebug = JSON.parse(app.devDebug);
           if (app.devDebug.openState == 1) {
@@ -347,6 +360,9 @@ export default {
             app.devDebug.openState = false;
           }
         });
+      axios.get("/requestLog/overview").then(function(res) {
+        app.logData = res.data[app.deviceXq.deviceName];
+      });
     },
     getDateString(date) {
       return (
@@ -366,22 +382,29 @@ export default {
     refresh() {},
     debug() {
       let app = this;
-      let data = {
-        id: app.id,
-        deviceType: this.deviceXq.deviceType,
-        openState: app.devDebug.openState ? 1 : 0,
-        lampSense: app.devDebug.lampSense,
-        brightness: app.devDebug.brightness,
-        gear: app.devDebug.gear,
-        temperature: app.devDebug.temperature,
-        pattern: app.devDebug.pattern,
-      };
-      axios.post("/device/test", data).then(function() {
-        app.$message({
-          type: "success",
-          message: "调试成功",
+      if (app.deviceXq.online == "已连接") {
+        let data = {
+          id: app.id,
+          deviceType: this.deviceXq.deviceType,
+          openState: app.devDebug.openState ? 1 : 0,
+          lampSense: app.devDebug.lampSense,
+          brightness: app.devDebug.brightness,
+          gear: app.devDebug.gear,
+          temperature: app.devDebug.temperature,
+          pattern: app.devDebug.pattern,
+        };
+        axios.post("/device/test", data).then(function() {
+          app.$message({
+            type: "success",
+            message: "调试成功",
+          });
         });
-      });
+      } else {
+        app.$message({
+          type: "error",
+          message: "请先烧录设备！",
+        });
+      }
     },
   },
   created() {

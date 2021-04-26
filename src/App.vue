@@ -22,13 +22,6 @@
                   <el-menu-item index="/devInfo">设备信息</el-menu-item>
                   <el-menu-item index="/devGroup">设备分组</el-menu-item>
                 </el-submenu>
-                <el-submenu index="3">
-                  <template slot="title"
-                    ><i class="el-icon-document"></i>
-                    <span>数据分析</span>
-                  </template>
-                  <el-menu-item index="/analysis">统计分析</el-menu-item>
-                </el-submenu>
                 <el-submenu index="4">
                   <template slot="title">
                     <i class="el-icon-set-up"></i>
