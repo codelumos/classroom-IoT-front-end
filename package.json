@@ -1,5 +1,9 @@
 {
-  "name": "myiot",
+  "name": "classroom-iot-front-end",
+  "contributors": [
+    "Xuan Shen <1422145612@qq.com>",
+    "Haonan Shi <haonshi@qq.com>"
+  ],
   "version": "0.1.0",
   "private": true,
   "scripts": {

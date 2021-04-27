@@ -28,19 +28,14 @@
         border
         @selection-change="handleSelectionChange"
       >
-        <!-- <el-table-column type="selection" width="55"> </el-table-column> -->
-        <el-table-column
-          prop="name"
-          label="规则名称"
-          width="200"
-        ></el-table-column>
-        <el-table-column prop="description" label="规则描述"></el-table-column>
-        <el-table-column label="创建时间" width="200">
+        <el-table-column prop="name" label="规则名称" width="120"></el-table-column>
+        <el-table-column prop="description" label="规则描述" width="220"></el-table-column>
+        <el-table-column label="创建时间" width="160">
           <template slot-scope="scope">{{
             getDateString(new Date(scope.row.createTime))
           }}</template>
         </el-table-column>
-        <el-table-column label="更新时间" width="200">
+        <el-table-column label="更新时间" width="160">
           <template slot-scope="scope">{{
             getDateString(new Date(scope.row.updateTime))
           }}</template>
