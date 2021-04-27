@@ -367,13 +367,12 @@ export default {
                 params: { groupId: app.deviceXq.groupId },
               })
               .then(function(res) {
-                console.log(res.data);
                 app.groupInfo = res.data;
               });
           }
         });
       axios.get("/requestLog/overview").then(function(res) {
-        app.logData = res.data[app.deviceXq.deviceName];
+        app.logData = res.data[app.id];
       });
     },
     getDateString(date) {
@@ -394,7 +393,8 @@ export default {
     refresh() {},
     debug() {
       let app = this;
-      if (app.deviceXq.online == "已连接") {
+      console.log(app.deviceXq);
+      if (app.deviceXq.onlineState) {
         let data = {
           id: app.id,
           deviceType: this.deviceXq.deviceType,

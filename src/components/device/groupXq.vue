@@ -10,7 +10,7 @@
     <div style="padding:10px 0">
       <h1 style="text-align:left;font-size:30px;margin:0">
         <i class="el-icon-back back-icon" @click="returnDevGroup()"></i>
-        {{ groupInfo.name }}
+        {{ groupInfo.teamName }}
       </h1>
     </div>
     <div style="display:flex;margin-bottom:20px;flex-wrap:wrap">

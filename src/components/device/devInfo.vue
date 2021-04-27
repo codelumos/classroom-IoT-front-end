@@ -347,6 +347,7 @@ export default {
       let app = this;
       app.allDevData = [];
       axios.get("/device/overview").then(function(res) {
+        console.log(res.data)
         for (let i = 0; i < res.data.length; i++) {
           app.allDevData.push(res.data[i]);
           if (res.data[i].onlineState) {

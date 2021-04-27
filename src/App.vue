@@ -27,7 +27,7 @@
                     <i class="el-icon-set-up"></i>
                     <span>规则引擎</span>
                   </template>
-                  <el-menu-item index="/rule">规则</el-menu-item>
+                  <el-menu-item index="/rule">规则列表</el-menu-item>
                 </el-submenu>
               </el-menu>
             </el-col>
