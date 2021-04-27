@@ -1,4 +1,4 @@
-# myiot
+# classroom-IoT-front-end
 
 ## Project setup
 ```

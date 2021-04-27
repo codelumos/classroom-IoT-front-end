@@ -335,25 +335,7 @@ export default {
       },
       ruleKeyword: "",
       ruleData: [
-        { name: "下课", description: "关掉所有设备" },
-        { name: "普通白天上课", description: "打开投影仪即可" },
-        { name: "普通夜晚上课", description: "打开投影仪，灯" },
-        {
-          name: "夏季白天上课",
-          description: "打开空调，投影仪，空调需要为制冷3挡",
-        },
-        {
-          name: "夏季晚上上课",
-          description: "打开空调，投影仪，灯，空调需要为制冷2挡",
-        },
-        {
-          name: "冬季白天上课",
-          description: "打开空调，投影仪，空调需要为制热2挡",
-        },
-        {
-          name: "冬季晚上上课",
-          description: "打开空调，投影仪，灯，空调需要为制热3挡",
-        },
+        { name: "name", description: "description" },
       ],
       editRuleDialog: {
         visible: false,
@@ -463,6 +445,7 @@ export default {
       Object.getOwnPropertyNames(data).forEach(function(item) {
         params.append(item, data[item]);
       });
+      // eslint-disable-next-line no-unused-vars
       axios.post("/rule/update", params).then(function(res) {
         app.$message({
           type: "success",
