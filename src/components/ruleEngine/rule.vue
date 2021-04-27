@@ -35,6 +35,16 @@
           width="200"
         ></el-table-column>
         <el-table-column prop="description" label="规则描述"></el-table-column>
+        <el-table-column label="创建时间" width="200">
+          <template slot-scope="scope">{{
+            getDateString(new Date(scope.row.createTime))
+          }}</template>
+        </el-table-column>
+        <el-table-column label="更新时间" width="200">
+          <template slot-scope="scope">{{
+            getDateString(new Date(scope.row.updateTime))
+          }}</template>
+        </el-table-column>
         <!-- <el-table-column label="编辑" width="200">
           <template slot-scope="scope">
             <el-button type="text" @click="editRule(scope.row)">修改</el-button>
@@ -43,14 +53,46 @@
             >
           </template>
         </el-table-column> -->
-        <el-table-column label="执行" width="170">
+        <el-table-column label="执行" width="270">
           <template slot-scope="scope">
+            <el-button type="primary" @click="openEditRuleDialog(scope.row)"
+              >修改</el-button
+            >
             <el-button type="warning" @click="openChooseDialog(scope.$index)"
               >选择设备并执行</el-button
             >
           </template>
         </el-table-column>
       </el-table>
+      <el-dialog
+        title="修改规则"
+        :visible.sync="editRuleDialog.visible"
+        width="30%"
+        style="text-align:center"
+      >
+        <span>
+          <div style="margin:10px 0">
+            <label>规则名称：</label>
+            <el-input
+              v-model="editRuleDialog.newName"
+              placeholder="请输入规则名称"
+              style="width:300px"
+            ></el-input>
+          </div>
+          <div style="margin:10px 0">
+            <label>规则描述：</label>
+            <el-input
+              v-model="editRuleDialog.newDescription"
+              placeholder="请输入规则描述"
+              style="width:300px"
+            ></el-input>
+          </div>
+        </span>
+        <span slot="footer">
+          <el-button @click="editRuleDialog.visible = false">取 消</el-button>
+          <el-button type="primary" @click="editRule()">执行</el-button>
+        </span>
+      </el-dialog>
       <!-- <el-row style="margin:10px 0;display:flex;align-items:center">
         <el-col style="width:10px;margin:0 25px 0 11px"
           ><el-checkbox
@@ -313,6 +355,12 @@ export default {
           description: "打开空调，投影仪，灯，空调需要为制热3挡",
         },
       ],
+      editRuleDialog: {
+        visible: false,
+        id: -1,
+        newName: "",
+        newDescription: "",
+      },
       multipleSelection: [],
       checked: false,
       currentStep: 1,
@@ -352,6 +400,21 @@ export default {
       if (query == "") return true;
       return item.groupName == query;
     },
+    getDateString(date) {
+      return (
+        date.getFullYear() +
+        "-" +
+        (date.getMonth() + 1) +
+        "-" +
+        date.getDate() +
+        " " +
+        date.getHours() +
+        ":" +
+        date.getMinutes() +
+        ":" +
+        date.getSeconds()
+      );
+    },
     nextStep() {
       if (this.currentStep < 3) {
         this.currentStep++;
@@ -382,6 +445,32 @@ export default {
           ],
         };
       }
+    },
+    openEditRuleDialog(row) {
+      this.editRuleDialog.id = row.id;
+      this.editRuleDialog.newName = row.name;
+      this.editRuleDialog.newDescription = row.description;
+      this.editRuleDialog.visible = true;
+    },
+    editRule() {
+      let app = this;
+      let data = {
+        id: this.editRuleDialog.id,
+        name: this.editRuleDialog.newName,
+        description: this.editRuleDialog.newDescription,
+      };
+      let params = new URLSearchParams();
+      Object.getOwnPropertyNames(data).forEach(function(item) {
+        params.append(item, data[item]);
+      });
+      axios.post("/rule/update", params).then(function(res) {
+        app.$message({
+          type: "success",
+          message: "修改成功！",
+        });
+        app.initPage();
+        app.editRuleDialog.visible = false;
+      });
     },
     deleteRule(index) {
       this.ruleData.splice(index, 1);
@@ -429,45 +518,51 @@ export default {
       this.chooseDevDialog.devices.value = [];
       this.chooseDevDialog.visible = true;
     },
-  },
-  created() {
-    let app = this;
-    axios.get("/group/overview").then(function(res) {
-      console.log(res.data);
-      for (let i = 0; i < res.data.length; i++) {
-        for (let j = 0; j < res.data[i].deviceVOS.length; j++) {
-          if (res.data[i].deviceVOS[j].onlineState) {
+    initPage() {
+      let app = this;
+      axios.get("/group/overview").then(function(res) {
+        console.log(res.data);
+        for (let i = 0; i < res.data.length; i++) {
+          for (let j = 0; j < res.data[i].deviceVOS.length; j++) {
+            if (res.data[i].deviceVOS[j].onlineState) {
+              app.addRuleDialog.devices.data.push({
+                key: res.data[i].deviceVOS[j].id,
+                label: res.data[i].deviceVOS[j].deviceName,
+                groupName: res.data[i].teamName,
+              });
+              app.chooseDevDialog.devices.data.push({
+                key: res.data[i].deviceVOS[j].id,
+                label: res.data[i].deviceVOS[j].deviceName,
+                groupName: res.data[i].teamName,
+              });
+            }
+          }
+        }
+      });
+      axios.get("/rule/query").then(function(res) {
+        app.ruleData = res.data;
+      });
+      axios.get("/group/without").then(function(res) {
+        console.log(res.data);
+        for (let i = 0; i < res.data.length; i++) {
+          if (res.data[i].onlineState) {
             app.addRuleDialog.devices.data.push({
-              key: res.data[i].deviceVOS[j].id,
-              label: res.data[i].deviceVOS[j].deviceName,
-              groupName: res.data[i].teamName,
+              key: res.data[i].id,
+              label: res.data[i].deviceName,
+              groupName: "",
             });
             app.chooseDevDialog.devices.data.push({
-              key: res.data[i].deviceVOS[j].id,
-              label: res.data[i].deviceVOS[j].deviceName,
-              groupName: res.data[i].teamName,
+              key: res.data[i].id,
+              label: res.data[i].deviceName,
+              groupName: "",
             });
           }
         }
-      }
-    });
-    axios.get("/group/without").then(function(res) {
-      console.log(res.data);
-      for (let i = 0; i < res.data.length; i++) {
-        if (res.data[i].onlineState) {
-          app.addRuleDialog.devices.data.push({
-            key: res.data[i].deviceVOS[j].id,
-            label: res.data[i].deviceVOS[j].deviceName,
-            groupName: "",
-          });
-          app.chooseDevDialog.devices.data.push({
-            key: res.data[i].deviceVOS[j].id,
-            label: res.data[i].deviceVOS[j].deviceName,
-            groupName: "",
-          });
-        }
-      }
-    });
+      });
+    },
+  },
+  created() {
+    this.initPage();
   },
 };
 </script>

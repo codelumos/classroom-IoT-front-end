@@ -87,13 +87,15 @@
               <div class="info-table-key">
                 分组名称
               </div>
-              <div class="info-table-value">{{ groupInfo.name }}</div>
+              <div class="info-table-value">{{ groupInfo.teamName }}</div>
             </div>
             <div class="info-table-block">
               <div class="info-table-key">
                 创建时间
               </div>
-              <div class="info-table-value">{{ groupInfo.createTime }}</div>
+              <div class="info-table-value">
+                {{ getDateString(new Date(groupInfo.createTime)) }}
+              </div>
             </div>
           </div>
         </div>
@@ -359,6 +361,16 @@ export default {
           } else {
             app.devDebug.openState = false;
           }
+          if (app.deviceXq.groupId != 0) {
+            axios
+              .get("/group/detail", {
+                params: { groupId: app.deviceXq.groupId },
+              })
+              .then(function(res) {
+                console.log(res.data);
+                app.groupInfo = res.data;
+              });
+          }
         });
       axios.get("/requestLog/overview").then(function(res) {
         app.logData = res.data[app.deviceXq.deviceName];
@@ -402,7 +414,7 @@ export default {
       } else {
         app.$message({
           type: "error",
-          message: "请先烧录设备！",
+          message: "请先烧录设备",
         });
       }
     },
