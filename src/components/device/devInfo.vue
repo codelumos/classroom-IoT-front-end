@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/devInfo' }">设备</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/devInfo' }">设备管理</el-breadcrumb-item>
       <el-breadcrumb-item>设备信息</el-breadcrumb-item>
     </el-breadcrumb>
     <div style="padding:10px 0">
@@ -20,32 +20,33 @@
         </el-col>
         <el-col :span="2"></el-col>
         <el-col v-for="(stat, index) in devStatistics" :key="index" :span="4"
-          ><div style="border-left:1px grey dashed">
+        >
+          <div style="border-left:1px grey dashed">
             <h4 style="margin:0;color:#8F8F8F;">{{ stat.title }}</h4>
             <b style="font-size:30px;">{{ stat.nums }}</b>
-          </div></el-col
+          </div>
+        </el-col
         >
       </el-row>
-      <el-row style="margin:10px 0px 10px 10px;">
-        <el-col :span="3">
-          <el-button
+      <el-row style="margin-bottom:10px;text-align:left">
+        <el-button
             type="primary"
-            style="float:left;"
             @click="openAddDevDialog()"
-            >添加设备</el-button
-          >
-        </el-col>
-        <el-col :span="10">
-          <el-input placeholder="请输入设备名称" v-model="searchDevName">
-            <el-button
+        >
+          添加设备
+        </el-button>
+        <el-input
+            v-model="searchDevName"
+            placeholder="请输入设备名称"
+            style="width:350px;margin-left:20px"
+        >
+          <el-button
               slot="append"
               icon="el-icon-search"
               @click="search(searchDevName)"
-            ></el-button>
-          </el-input>
-        </el-col>
+          ></el-button>
+        </el-input>
       </el-row>
-
       <el-table
         :data="currentTableData"
         border
@@ -333,7 +334,7 @@ export default {
       this.$refs.devTable.clearSelection();
     },
     getDevInfo(row) {
-      this.$router.push({ path: `/devXq/${row.id}` });
+      this.$router.push({path: `/infoDetail/${row.id}`});
     },
     search(name) {
       let app = this;

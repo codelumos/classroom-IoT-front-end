@@ -91,7 +91,7 @@
           >
           <el-table-column label="操作">
             <template slot-scope="scope">
-              <el-button type="text" @click="getDevXq(scope.row)"
+              <el-button type="text" @click="getInfoDetail(scope.row)"
                 >查看</el-button
               >
               <el-button type="text" @click="deleteDevFromGroup(scope.row)"
@@ -251,8 +251,8 @@ export default {
         date.getSeconds()
       );
     },
-    getDevXq(row) {
-      this.$router.push({ path: `/devXq/${row.id}` });
+    getInfoDetail(row) {
+      this.$router.push({ path: `/infoDetail/${row.id}` });
     },
     getDevStatistics() {
       this.devStatistics.all = this.groupInfo.deviceVOS.length;

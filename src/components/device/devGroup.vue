@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/devInfo' }">设备</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/devInfo' }">设备管理</el-breadcrumb-item>
       <el-breadcrumb-item>设备分组</el-breadcrumb-item>
     </el-breadcrumb>
     <div style="padding:10px 0;text-align:left">
@@ -9,18 +9,24 @@
         {{ pageTitle }}
       </h1>
       <div style="margin-bottom:10px">
-        <el-button type="primary" @click="addGroupDialog.visible = true"
-          >添加分组</el-button
-        ><el-input
-          v-model="searchGroupWord"
-          placeholder="请输入分组名称"
-          style="width:350px;margin-left:20px"
-          ><el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="search(searchGroupWord)"
+        <el-button
+            type="primary"
+            @click="addGroupDialog.visible = true"
+        >
+          添加分组
+        </el-button>
+        <el-input
+            v-model="searchGroupWord"
+            placeholder="请输入分组名称"
+            style="width:350px;margin-left:20px"
+        >
+          <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="search(searchGroupWord)"
           ></el-button
-        ></el-input>
+          >
+        </el-input>
       </div>
       <el-table
         :data="groupData"
@@ -115,7 +121,7 @@ export default {
       this.checked = val.length == 0 ? false : true;
     },
     getGroupInfo(row) {
-      this.$router.push({ path: `/groupXq/${row.id}` });
+      this.$router.push({path: `/groupDetail/${row.id}`});
     },
     openAddGroupDialog() {
       this.addGroupDialog.visible = true;

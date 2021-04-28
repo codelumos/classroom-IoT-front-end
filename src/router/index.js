@@ -2,9 +2,10 @@ import Vue from "vue";
 import Router from "vue-router";
 import devInfo from "../components/device/devInfo";
 import rule from "../components/rule/rule";
-import devXq from "../components/device/infoDetail";
+import infoDetail from "../components/device/infoDetail";
 import devGroup from "../components/device/devGroup";
-import groupXq from "../components/device/groupDetail";
+import groupDetail from "../components/device/groupDetail";
+
 Vue.use(Router);
 
 export default new Router({
@@ -23,16 +24,16 @@ export default new Router({
       component: rule,
     },
     {
-      path: "/devXq/:id",
-      component: devXq,
+      path: "/infoDetail/:id",
+      component: infoDetail,
     },
     {
       path: "/devGroup",
       component: devGroup,
     },
     {
-      path: "/groupXq/:id",
-      component: groupXq,
+      path: "/groupDetail/:id",
+      component: groupDetail,
     },
   ],
 });

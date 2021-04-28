@@ -2,24 +2,29 @@
   <div>
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/rule' }">规则引擎</el-breadcrumb-item>
-      <el-breadcrumb-item>规则</el-breadcrumb-item>
+      <el-breadcrumb-item>规则列表</el-breadcrumb-item>
     </el-breadcrumb>
     <div style="padding:10px 0;text-align:left">
       <h1 style="text-align:left;font-size:30px;margin:0 0 10px 0">
         {{ pageTitle }}
       </h1>
       <div style="margin-bottom:10px">
+        <el-button
+            type="primary"
+        >
+          添加规则
+        </el-button>
         <el-input
             v-model="ruleKeyword"
             placeholder="请输入规则名称"
-            style="width:350px;"
+            style="width:350px;margin-left:20px"
         >
           <el-button
               slot="append"
               icon="el-icon-search"
               @click="search()"
-          ></el-button
           >
+          </el-button>
         </el-input>
       </div>
       <el-table
@@ -33,27 +38,23 @@
         <el-table-column prop="name" label="规则名称" width="120"></el-table-column>
         <el-table-column prop="description" label="规则描述" width="220"></el-table-column>
         <el-table-column label="创建时间" width="160">
-          <template slot-scope="scope">{{
-              getDateString(new Date(scope.row.createTime))
-            }}
+          <template slot-scope="scope">
+            {{ getDateString(new Date(scope.row.createTime)) }}
           </template>
         </el-table-column>
         <el-table-column label="更新时间" width="160">
-          <template slot-scope="scope">{{
-              getDateString(new Date(scope.row.updateTime))
-            }}
+          <template slot-scope="scope">
+            {{ getDateString(new Date(scope.row.updateTime)) }}
           </template>
         </el-table-column>
         <el-table-column label="执行" width="270">
           <template slot-scope="scope">
-            <el-button type="primary" @click="openEditRuleDialog(scope.row)"
-            >修改
-            </el-button
-            >
-            <el-button type="warning" @click="openChooseDialog(scope.$index)"
-            >选择设备并执行
-            </el-button
-            >
+            <el-button type="primary" @click="openEditRuleDialog(scope.row)">
+              修改
+            </el-button>
+            <el-button type="warning" @click="openChooseDialog(scope.$index)">
+              选择设备并执行
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -70,7 +71,8 @@
                 v-model="editRuleDialog.newName"
                 placeholder="请输入规则名称"
                 style="width:300px"
-            ></el-input>
+            >
+            </el-input>
           </div>
           <div style="margin:10px 0">
             <label>规则描述：</label>
@@ -78,7 +80,8 @@
                 v-model="editRuleDialog.newDescription"
                 placeholder="请输入规则描述"
                 style="width:300px"
-            ></el-input>
+            >
+            </el-input>
           </div>
         </span>
         <span slot="footer">
@@ -102,13 +105,13 @@
             filterable
             style="text-align:left;margin-left:70px"
         >
-        </el-transfer
-        ></span>
+        </el-transfer>
+      </span>
       <span slot="footer">
         <el-button @click="chooseDevDialog.visible = false">取 消</el-button>
         <el-button type="primary" @click="executeRule()">执行</el-button>
-      </span></el-dialog
-    >
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -148,14 +151,7 @@ export default {
         },
       },
       ruleKeyword: "",
-      ruleData: [
-        {
-          name: "name",
-          description: "description",
-          createTime: "2021-4-20 0:0:0",
-          updateTime: "2021-4-20 0:0:0"
-        },
-      ],
+      ruleData: [],
       editRuleDialog: {
         visible: false,
         id: -1,

@@ -8,7 +8,7 @@
         <el-aside width="250px">
           <el-row class="tac">
             <el-col :span="24">
-              <h5>导航栏</h5>
+              <h3>导航栏</h3>
               <el-menu
                   :default-active="currentIndex"
                   class="el-menu-vertical"

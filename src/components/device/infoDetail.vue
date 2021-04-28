@@ -2,31 +2,29 @@
   <div>
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/devInfo' }">设备</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/devInfo' }"
-        >设备信息</el-breadcrumb-item
-      >
+      <el-breadcrumb-item :to="{ path: '/devInfo' }">设备信息</el-breadcrumb-item>
       <el-breadcrumb-item>设备详情</el-breadcrumb-item>
     </el-breadcrumb>
     <div style="padding:10px 0">
       <h1 style="text-align:left;font-size:30px;margin:0">
         <i class="el-icon-back back-icon" @click="returnDevInfo()"></i>
-        {{ deviceXq.deviceName }}
+        {{ infoDetail.deviceName }}
         <el-tag
-          :type="deviceXq.onlineState ? 'success' : 'warning'"
+          :type="infoDetail.onlineState ? 'success' : 'warning'"
           style="vertical-align:middle"
         >
-          {{ deviceXq.onlineState ? "已连接" : "未连接" }}
+          {{ infoDetail.onlineState ? "已连接" : "未连接" }}
         </el-tag>
       </h1>
     </div>
     <div style="display:flex;margin-bottom:20px;">
       <div style="width:45%;text-align:left">
         <label style="color:#888;margin:0 22px">产品</label>
-        <label style="color:#555">{{ devTypes[deviceXq.deviceType] }}</label>
+        <label style="color:#555">{{ devTypes[infoDetail.deviceType] }}</label>
       </div>
       <div style="width:45%;text-align:left">
         <label style="color:#888;margin:0 22px">设备证书</label>
-        <label style="color:#555">{{ deviceXq.credential }}</label>
+        <label style="color:#555">{{ infoDetail.credential }}</label>
       </div>
     </div>
     <el-tabs v-model="activeName" type="border-card">
@@ -36,12 +34,12 @@
           <div class="info-table-block">
             <div class="info-table-key">产品名称</div>
             <div class="info-table-value">
-              {{ devTypes[deviceXq.deviceType] }}
+              {{ devTypes[infoDetail.deviceType] }}
             </div>
           </div>
           <div class="info-table-block">
             <div class="info-table-key">设备名称</div>
-            <div class="info-table-value">{{ deviceXq.deviceName }}</div>
+            <div class="info-table-value">{{ infoDetail.deviceName }}</div>
           </div>
           <div class="info-table-block">
             <div class="info-table-key">实时延迟</div>
@@ -58,23 +56,23 @@
           <div class="info-table-block">
             <div class="info-table-key">创建时间</div>
             <div class="info-table-value">
-              {{ getDateString(new Date(deviceXq.createTime)) }}
+              {{ getDateString(new Date(infoDetail.createTime)) }}
             </div>
           </div>
           <div class="info-table-block">
             <div class="info-table-key">烧录状态</div>
             <div class="info-table-value">
-              {{ deviceXq.onlineState ? "已烧录" : "未烧录" }}
+              {{ infoDetail.onlineState ? "已烧录" : "未烧录" }}
             </div>
           </div>
           <div class="info-table-block">
             <div class="info-table-key">连接状态</div>
             <div class="info-table-value">
-              {{ deviceXq.onlineState ? "已连接" : "未连接" }}
+              {{ infoDetail.onlineState ? "已连接" : "未连接" }}
             </div>
           </div>
         </div>
-        <div v-if="deviceXq.groupId != 0">
+        <div v-if="infoDetail.groupId != 0">
           <h3 style="text-align:left;margin:10px 0">设备分组</h3>
           <div class="info-table">
             <div class="info-table-block">
@@ -104,7 +102,7 @@
         <h3 style="text-align:left;margin:10px 0">设备影子</h3>
         <div>
           <textarea
-            v-model="deviceXq.status"
+            v-model="infoDetail.status"
             disabled
             style="width:100%;height:300px"
           ></textarea>
@@ -130,7 +128,7 @@
       <el-tab-pane label="在线调试" name="debug">
         <h3 style="text-align:left;margin:10px 0">在线调试</h3>
 
-        <div v-if="deviceXq.deviceType == 0">
+        <div v-if="infoDetail.deviceType == 0">
           <div
             class="info-table-block"
             style="width:70%;border-left:1px solid #ecedee"
@@ -191,7 +189,7 @@
             </div>
           </div>
         </div>
-        <div v-else-if="deviceXq.deviceType == 1">
+        <div v-else-if="infoDetail.deviceType == 1">
           <div
             class="info-table-block"
             style="width:70%;border-left:1px solid #ecedee"
@@ -305,7 +303,7 @@ export default {
   data() {
     return {
       id: 0,
-      deviceXq: {
+      infoDetail: {
         deviceName: "空调123",
         id: 0,
         deviceType: 1,
@@ -349,12 +347,12 @@ export default {
     getDelay() {
       this.delay = "60ms";
     },
-    getDevXq() {
+    getInfoDetail() {
       let app = this;
       axios
         .get("/device/detail", { params: { deviceId: app.id } })
         .then(function(res) {
-          app.deviceXq = res.data;
+          app.infoDetail = res.data;
           app.devDebug = JSON.parse(res.data.status).state;
           app.devDebug = JSON.parse(app.devDebug);
           if (app.devDebug.openState == 1) {
@@ -362,10 +360,10 @@ export default {
           } else {
             app.devDebug.openState = false;
           }
-          if (app.deviceXq.groupId != 0) {
+          if (app.infoDetail.groupId != 0) {
             axios
               .get("/group/detail", {
-                params: { groupId: app.deviceXq.groupId },
+                params: { groupId: app.infoDetail.groupId },
               })
               .then(function(res) {
                 app.groupInfo = res.data;
@@ -394,11 +392,11 @@ export default {
     refresh() {},
     debug() {
       let app = this;
-      console.log(app.deviceXq);
-      if (app.deviceXq.onlineState) {
+      console.log(app.infoDetail);
+      if (app.infoDetail.onlineState) {
         let data = {
           id: app.id,
-          deviceType: this.deviceXq.deviceType,
+          deviceType: this.infoDetail.deviceType,
           openState: app.devDebug.openState ? 1 : 0,
           lampSense: app.devDebug.lampSense,
           brightness: app.devDebug.brightness,
@@ -422,7 +420,7 @@ export default {
   },
   created() {
     this.id = this.$route.params.id;
-    this.getDevXq();
+    this.getInfoDetail();
     this.$emit("getIndex", "/devInfo");
   },
 };
