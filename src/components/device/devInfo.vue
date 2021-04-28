@@ -58,7 +58,7 @@
         <el-table-column type="selection" width="55"> </el-table-column>
         <el-table-column prop="deviceName" label="设备名称">
         </el-table-column>
-        <el-table-column label="设备所属产品" width="200">
+        <el-table-column label="设备类型" width="200">
           <template slot-scope="scope">
             <span>{{ devTypes[scope.row.deviceType] }}</span>
           </template>
@@ -197,6 +197,7 @@
 </template>
 <script>
 import axios from "axios";
+
 export default {
   data() {
     return {

@@ -30,8 +30,8 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55"> </el-table-column>
-        <el-table-column prop="teamName" label="分组名称"></el-table-column>
-        <el-table-column prop="id" label="分组id"></el-table-column>
+        <el-table-column prop="id" label="组ID"></el-table-column>
+        <el-table-column prop="groupName" label="分组名称"></el-table-column>
         <el-table-column prop="devNums" label="设备数量"></el-table-column>
         <el-table-column prop="createTime" label="创建时间"></el-table-column>
         <el-table-column label="操作">
@@ -93,6 +93,7 @@
 
 <script>
 import axios from "axios";
+
 export default {
   data() {
     return {

@@ -2,9 +2,9 @@ import Vue from "vue";
 import Router from "vue-router";
 import devInfo from "../components/device/devInfo";
 import rule from "../components/rule/rule";
-import devXq from "../components/device/devXq";
+import devXq from "../components/device/infoDetail";
 import devGroup from "../components/device/devGroup";
-import groupXq from "../components/device/groupXq";
+import groupXq from "../components/device/groupDetail";
 Vue.use(Router);
 
 export default new Router({

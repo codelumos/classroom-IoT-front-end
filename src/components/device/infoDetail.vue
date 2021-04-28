@@ -79,7 +79,7 @@
           <div class="info-table">
             <div class="info-table-block">
               <div class="info-table-key">
-                分组id
+                组ID
               </div>
               <div class="info-table-value">{{ groupInfo.id }}</div>
             </div>
@@ -87,7 +87,7 @@
               <div class="info-table-key">
                 分组名称
               </div>
-              <div class="info-table-value">{{ groupInfo.teamName }}</div>
+              <div class="info-table-value">{{ groupInfo.groupName }}</div>
             </div>
             <div class="info-table-block">
               <div class="info-table-key">
@@ -300,6 +300,7 @@
 </template>
 <script>
 import axios from "axios";
+
 export default {
   data() {
     return {
@@ -318,9 +319,9 @@ export default {
       devTypes: ["灯", "空调", "投影仪"],
       activeName: "info",
       groupInfo: {
-        id: 1,
-        name: "分组1",
-        createTime: "2021/04/15 15:00:41",
+        id: 0,
+        groupName: "未分组",
+        createTime: "2021/04/15 00:00:00",
       },
       property2name: {
         openState: "运行状态",

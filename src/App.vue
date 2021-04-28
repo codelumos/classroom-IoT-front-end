@@ -2,17 +2,17 @@
   <div id="app">
     <el-container>
       <el-header>
-        <img src="./assets/title.png" style="height:80px;float:left" />
+        <img src="./assets/title.png" style="height:80px;float:left" alt=""/>
       </el-header>
       <el-container>
-        <el-aside width="250px"
-          ><el-row class="tac">
+        <el-aside width="250px">
+          <el-row class="tac">
             <el-col :span="24">
               <h5>导航栏</h5>
               <el-menu
-                :default-active="currentIndex"
-                class="el-menu-vertical"
-                router
+                  :default-active="currentIndex"
+                  class="el-menu-vertical"
+                  router
               >
                 <el-submenu index="2">
                   <template slot="title">
@@ -69,6 +69,7 @@ export default {
   width: 80%;
   margin: 0 10%;
 }
+
 html,
 body {
   height: 100%;
@@ -102,9 +103,11 @@ body {
   border: 1px solid #bdb6b6;
   border-left: none;
 }
+
 .el-menu-vertical li {
   background-color: #f5f5f5;
 }
+
 .el-menu-vertical li .is-active {
   color: #75b7ff;
 }
