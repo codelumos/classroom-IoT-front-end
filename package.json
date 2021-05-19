@@ -4,7 +4,7 @@
     "Xuan Shen <1422145612@qq.com>",
     "Haonan Shi <haonshi@qq.com>"
   ],
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -15,7 +15,7 @@
     "axios": "^0.21.1",
     "babel-runtime": "^6.26.0",
     "codemirror": "^5.61.0",
-    "core-js": "^3.11.0",
+    "core-js": "^3.12.1",
     "echarts": "^5.1.1",
     "element-ui": "^2.15.1",
     "vue": "^2.6.12",
@@ -23,14 +23,14 @@
     "vue-router": "^3.5.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.5.12",
-    "@vue/cli-plugin-eslint": "^4.5.12",
-    "@vue/cli-service": "^4.5.12",
+    "@vue/cli-plugin-babel": "^4.5.13",
+    "@vue/cli-plugin-eslint": "^4.5.13",
+    "@vue/cli-service": "^4.5.13",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.25.0",
+    "eslint": "^7.26.0",
     "eslint-plugin-vue": "^7.9.0",
-    "node-sass": "^5.0.0",
-    "sass-loader": "^10.1.1",
+    "node-sass": "^6.0.0",
+    "sass-loader": "^10.2.0",
     "vue-cli-plugin-element": "^1.0.1",
     "vue-template-compiler": "^2.6.12",
     "vue-codemirror": "^4.0.6",
