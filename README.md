@@ -16,11 +16,13 @@
 
 ## 项目构建
 
-1. 修改vue.config.js中的后端服务器地址
+1. 启动[`教室IoT设备管理平台后端`](https://github.com/codelumos/classroom-IoT-rear-end)项目
 
-2. 启动项目
+2. 配置vue.config.js中的后端服务器地址
 
-```
+3. 启动项目
+
+``` bash
 # Project setup
 npm install
 
@@ -29,9 +31,6 @@ npm run serve
 
 # Compiles and minifies for production
 npm run build
-
-# Run your tests
-npm run test
 
 # Lints and fixes files
 npm run lint

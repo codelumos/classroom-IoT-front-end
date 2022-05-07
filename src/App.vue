@@ -37,6 +37,10 @@
           <router-view @getIndex="getCurrentIndex"></router-view>
         </el-main>
       </el-container>
+      <el-footer>
+        Copyright © 11-224, <a href="https://www.nju.edu.cn/" style="color: black">Nanjing University</a>
+        All Rights Reserved
+      </el-footer>
     </el-container>
   </div>
 </template>
